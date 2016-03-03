@@ -15,32 +15,36 @@ void swap(int* a, int* b)
 int partition(int ar[N], int left, int right)
 {
     int pivot = right;
-    int i = left;
-    int j = right-1;
-    
-    printf(" pivot element %d\n", ar[pivot]);
+
+    printf("%s: pivot element %d\n\n", __FUNCTION__, ar[pivot]);
+    displayList(ar, N);
     //getchar();
-    while(i < j) {
-        while(ar[i] < ar[pivot])
-            i++;
-        while(ar[j] > ar[pivot])
-            j--;
-        if(i < j) {
-            swap(&ar[i],&ar[j]);
+    while(left < right) {
+        while(ar[left] < ar[pivot])
+            left++;
+        while(ar[right] > ar[pivot])
+            right--;
+        if(left < right) {
+            swap(&ar[left],&ar[right]);
+            displayList(ar, N);
         }
     }
-    swap(&ar[pivot],&ar[i]);
+    printf("%s: left %d , right %d \n",  __FUNCTION__, left, right);
+    swap(&ar[pivot],&ar[left]);
     displayList(ar, N);
-    return i;
+    printf("%s: Mid-point is %d\n", __FUNCTION__, left);
+    return left;
 }
 
 
 void quickSort(int ar[N], int l, int h)
 {
+    printf("%s: left %d , right %d \n",  __FUNCTION__, l, h);
     if(l < h) {
         int p = partition(ar, l, h);
-        printf("pivot is %d\n", p);
-        quickSort(ar, l  , p-1);
+        if(l < p-1)
+        quickSort(ar, l , p-1);
+        if(p+1 < h)
         quickSort(ar, p+1, h);
     }
 }
@@ -81,6 +85,7 @@ void displayList(int arr[N], int n)
 int main()
 {
     int ar[N] = {4,5,9,2,3,1};
+    // int ar[N] = {1,5,4,2,3,6};
     quickSort(ar, 0, N-1);
     displayList(ar, N);
     return 0;
